@@ -15,7 +15,7 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "dev": "webpack mode=development",
+    "dev": "webpack --mode:development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

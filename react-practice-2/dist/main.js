@@ -7683,7 +7683,11 @@ __webpack_require__.r(__webpack_exports__);
 
 class App extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      className: "row"
+    }, "Tic Tac Toe"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board__WEBPACK_IMPORTED_MODULE_1__["default"], null));
   }
 
 }
@@ -7706,20 +7710,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  getSquares() {
-    this.squares = [];
-  }
-
-  renderSquare(i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_square__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      value: i
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: 9
+    };
   }
 
   render() {
+    const boardArea = [];
+
+    for (let i = 1; i <= this.state.squares; i++) {
+      boardArea.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_square__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        key: i,
+        value: "0"
+      }));
+    }
+
+    console.log(boardArea);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "board"
-    }, this.renderSquare(9));
+      className: "board row"
+    }, boardArea);
   }
 
 }
@@ -7738,13 +7749,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Board; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+ // import Game from "./game"
 
 class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    console.log(e.currentTarget);
+  }
+
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: this.handleClick,
       className: "square",
       value: this.props.value
-    }, this.props.value);
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "inner-text"
+    }, this.props.value));
   }
 
 }

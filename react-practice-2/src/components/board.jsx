@@ -5,18 +5,19 @@ export default class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares = 9
+      squares: 9
     }
   }
 
   render() {
     const boardArea = []
-    for(i = 0; i < this.state.squares; i++) {
-      boardArea.push(<Square id={i} value={i}/>)
+    for(let i = 1; i <= this.state.squares; i++) {
+      boardArea.push(<Square key={i} value={"0"}/>)
     }
+    console.log(boardArea)
 
     return (
-      <div className="board">
+      <div className="board row">
         {boardArea}
       </div>
     )

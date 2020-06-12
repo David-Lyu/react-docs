@@ -1,0 +1,58 @@
+.container {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  width: 100%;
+  text-align: center;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+}
+
+/* need to change this to be responsive */
+.board > * {
+  flex-basis: 33%;
+  padding-bottom: 33%;
+}
+
+.square {
+  border: none;
+}
+
+.board > :nth-child(3n+1) {
+  border-right: 10px solid black;
+}
+
+.board > :nth-child(3n) {
+  border-left: 10px solid black;
+}
+
+.board > :nth-child(-n+3) {
+  border-bottom: 10px solid black;
+}
+
+.board > :nth-child(n+7):nth-child(-n+9) {
+  border-top: solid 10px black;
+}
+
+.square {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-text {
+  position: absolute;
+  font-size: 10em;
+}

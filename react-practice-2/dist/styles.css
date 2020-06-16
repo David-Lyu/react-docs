@@ -19,10 +19,9 @@
   width: 50%;
 }
 
-/* need to change this to be responsive */
 .board > * {
-  flex-basis: 33%;
-  padding-bottom: 33%;
+  flex-basis: 30%;
+  padding-bottom: 30%;
 }
 
 .square {
@@ -52,7 +51,8 @@
   align-items: center;
 }
 
+/* need to change this to be responsive or media quieries*/
 .inner-text {
   position: absolute;
-  font-size: 10em;
+  font-size: 10rem;
 }

@@ -48,11 +48,12 @@
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 /* need to change this to be responsive or media quieries*/
 .inner-text {
   position: absolute;
-  font-size: 10rem;
+  font-size: 5rem;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -7682,12 +7682,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class App extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reset: false
+    };
+  }
+
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "row"
-    }, "Tic Tac Toe"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+    }, "Tic Tac Toe"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      reset: this.state.reset
+    }));
   }
 
 }
@@ -7712,25 +7721,102 @@ __webpack_require__.r(__webpack_exports__);
 class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
+    this.checkWinner = this.checkWinner.bind(this);
+    this.changePlayer = this.changePlayer.bind(this);
+    this.reset = this.reset.bind(this);
     this.state = {
-      squares: 9
+      squares: 9,
+      player: 1,
+      reset: false,
+      win: false
     };
   }
 
+  changePlayer(e) {
+    const value = this.state.player === 1 ? 'X' : 'O';
+    this.state.player === 1 ? this.setState({
+      player: 2
+    }) : this.setState({
+      player: 1
+    });
+  }
+
+  checkWinner(index) {
+    const player = this.state.player === 1 ? "O" : "X";
+    const indexClick = parseInt(index);
+    const square = document.querySelectorAll(".square"); //check horizontal
+
+    if (index <= 2) {
+      for (let i = 0; i < 3; i++) {
+        if (square[i].value === player) {
+          if (i === 2) {
+            return this.setState({
+              win: true
+            });
+          }
+
+          continue;
+        } else {
+          break;
+        }
+      }
+    }
+
+    if (index < 6) {
+      for (let i = 3; i < 6; i++) {
+        if (square[i].value === player) {
+          if (i === 5) {
+            return this.setState({
+              win: true
+            });
+            continue;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  }
+
+  reset() {
+    const reset = this.state.reset;
+    this.setState({
+      player: 1,
+      reset: !reset
+    });
+  }
+
   render() {
+    let winningPlayer = '';
+
+    if (this.state.win && this.state.player === 1) {
+      winningPlayer = '2';
+    }
+
+    if (this.state.win && this.state.player === 2) {
+      winningPlayer = '1';
+    }
+
     const boardArea = [];
 
     for (let i = 1; i <= this.state.squares; i++) {
       boardArea.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_square__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: i,
-        value: "0"
+        id: i - 1,
+        changePlayer: this.changePlayer,
+        player: this.state.player,
+        reset: this.state.reset,
+        checkWinner: this.checkWinner
       }));
     }
 
-    console.log(boardArea);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row"
+    }, this.state.win && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, `Winner: Player ${winningPlayer}`) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, `Turn: Player ${this.state.player}`), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: this.reset
+    }, "Reset")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "board row"
-    }, boardArea);
+    }, boardArea));
   }
 
 }
@@ -7755,20 +7841,44 @@ class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      squareVal: null
+    };
   }
 
   handleClick(e) {
-    console.log(e.currentTarget);
+    const index = e.currentTarget.id;
+
+    if (this.state.squareVal) {
+      alert("please choose an empty box");
+    } else {
+      this.props.changePlayer(e);
+      this.props.player === 1 ? this.setState({
+        squareVal: 'X'
+      }, () => this.props.checkWinner(index)) : this.setState({
+        squareVal: 'O'
+      }, () => this.props.checkWinner(index));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.reset !== this.props.reset) {
+      console.log("reset");
+      this.setState({
+        squareVal: null
+      });
+    }
   }
 
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      id: this.props.id,
       onClick: this.handleClick,
       className: "square",
-      value: this.props.value
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      value: this.state.squareVal
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "inner-text"
-    }, this.props.value));
+    }, this.state.squareVal));
   }
 
 }

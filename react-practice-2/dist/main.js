@@ -7745,7 +7745,6 @@ class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     const player = this.state.player === 1 ? "O" : "X"; // index = parseInt(index)
 
     const square = document.querySelectorAll(".square");
-    console.log(index);
 
     if (index <= 2) {
       //check horizontal
@@ -7914,7 +7913,8 @@ class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         changePlayer: this.changePlayer,
         player: this.state.player,
         reset: this.state.reset,
-        checkWinner: this.checkWinner
+        checkWinner: this.checkWinner,
+        win: this.state.win
       }));
     }
 
@@ -7982,7 +7982,8 @@ class Board extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       id: this.props.id,
       onClick: this.handleClick,
       className: "square",
-      value: this.state.squareVal
+      value: this.state.squareVal,
+      disabled: this.props.win
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "inner-text"
     }, this.state.squareVal));

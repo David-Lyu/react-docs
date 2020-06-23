@@ -22,11 +22,13 @@ export default class Board extends React.Component {
 
   checkWinner(index) {
     const player = this.state.player === 1 ? "O" : "X"
-    const indexClick = parseInt(index)
+    // index = parseInt(index)
     const square = document.querySelectorAll(".square")
-    //check horizontal
+    console.log(index)
+
     if(index <= 2) {
-      for(let i = 0; i < 3; i++){
+      //check horizontal
+      for(let i = 0; i < 3; i++) {
         if(square[i].value === player) {
           if(i === 2){
             return this.setState({ win: true })
@@ -36,16 +38,92 @@ export default class Board extends React.Component {
           break;
         }
       }
-    }
-    if(index < 6) {
-      for(let i = 3; i < 6; i++) {
-        if(square[i].value === player) {
-          if(i === 5) {
+      //check verticle
+      if(square[index + 3].value === player) {
+        if(square[index + 6].value === player) {
+          return this.setState({ win: true })
+        }
+      }
+      //check diagonal
+      if(index === 0) {
+        if(square[4].value === player) {
+          if(square[8].value === player) {
             return this.setState({ win: true })
-            continue;
+          }
+        }
+      }
+      if(index === 2) {
+        if(square[4].value === player) {
+          if(square[6].value === player) {
+            return this.setState({ win: true })
+          }
+        }
+      }
+    }
+
+    if(index > 2 && index < 6) {
+    //check horizontal
+    for(let i = 3; i < 6; i++) {
+      if(square[i].value === player) {
+        if(i === 5) {
+          return this.setState({ win: true })
+        }
+          continue;
+        } else {
+          break;
+        }
+      }
+      //check verticle
+      if(square[index + 3].value === player) {
+        if(square[index - 3].value === player) {
+          this.setState({ win: true })
+        }
+      }
+      //check diagonal
+      if(index === 4) {
+      if(square[0].value === player) {
+        if(square[8].value === player) {
+          return this.setState({ win: true })
+        }
+      }
+      if(square[2].value === player) {
+        if(square[6].value === player) {
+          return this.setState({ win: true })
+        }
+      }
+      }
+    }
+
+    if(index > 5 && index < 9) {
+      //check horizontal
+      for(let i = 6; i < 9; i++) {
+        if(square[i].value === player) {
+          if(i === 8) {
+            return this.setState({ win: true })
           }
         } else {
           break;
+        }
+      }
+      //check verticle
+      if(square[index - 3].value === player) {
+        if(square[index - 6].value === player) {
+          this.setState({ win: true })
+        }
+      }
+      //check diagonal
+      if(index === 6) {
+        if(square[4].value === player) {
+          if(square[2].value === player) {
+            return this.setState({ win: true })
+          }
+        }
+      }
+      if(index === 8) {
+        if(square[4].value === player) {
+          if(square[0].value === player) {
+            return this.setState({ win: true })
+          }
         }
       }
     }
@@ -55,7 +133,8 @@ export default class Board extends React.Component {
     const reset = this.state.reset
     this.setState({
       player: 1,
-      reset: !reset
+      reset: !reset,
+      win: false
     })
   }
 

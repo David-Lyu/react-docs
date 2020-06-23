@@ -29,7 +29,7 @@ export default class Board extends React.Component {
 
   render() {
     return (
-      <button id={this.props.id} onClick={this.handleClick} className="square" value={this.state.squareVal}>
+      <button id={this.props.id} onClick={this.handleClick} className="square" value={this.state.squareVal} disabled={this.props.win}>
         <div className="inner-text">
         {this.state.squareVal}
         </div>

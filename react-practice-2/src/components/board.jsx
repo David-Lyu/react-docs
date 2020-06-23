@@ -24,7 +24,6 @@ export default class Board extends React.Component {
     const player = this.state.player === 1 ? "O" : "X"
     // index = parseInt(index)
     const square = document.querySelectorAll(".square")
-    console.log(index)
 
     if(index <= 2) {
       //check horizontal
@@ -156,6 +155,7 @@ export default class Board extends React.Component {
           player={this.state.player}
           reset={this.state.reset}
           checkWinner={this.checkWinner}
+          win={this.state.win}
         />
       )
     }

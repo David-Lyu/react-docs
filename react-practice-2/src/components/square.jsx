@@ -10,7 +10,7 @@ export default class Board extends React.Component {
   }
 
   handleClick(e) {
-    const index = e.currentTarget.id
+    const index = parseInt(e.currentTarget.id)
     if(this.state.squareVal) {
       alert("please choose an empty box")
     } else {
@@ -23,7 +23,6 @@ export default class Board extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.reset !== this.props.reset) {
-      console.log("reset")
       this.setState({squareVal: null})
     }  
   }

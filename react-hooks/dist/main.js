@@ -7678,19 +7678,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _demo1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./demo1 */ "./src/components/demo1.jsx");
+/* harmony import */ var _greeting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./greeting */ "./src/components/greeting.jsx");
+/* harmony import */ var _media__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./media */ "./src/components/media.jsx");
+
 
 
 function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_demo1__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_media__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 
 /***/ }),
 
-/***/ "./src/components/demo1.jsx":
-/*!**********************************!*\
-  !*** ./src/components/demo1.jsx ***!
-  \**********************************/
+/***/ "./src/components/greeting.jsx":
+/*!*************************************!*\
+  !*** ./src/components/greeting.jsx ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7761,6 +7763,61 @@ function useWindowWidth() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  });
+  return width;
+}
+
+/***/ }),
+
+/***/ "./src/components/media.jsx":
+/*!**********************************!*\
+  !*** ./src/components/media.jsx ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Media; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+ //time stamp
+//1:03:30
+
+function Media() {
+  const small = useMedia("(max-width: 400px");
+  const large = useMedia("(min-width: 800px");
+  const width = useWidth();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Media"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Width: ", width), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Small? ", small ? "Yep" : "Nope"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Large? ", large ? "Yep" : "Nope"));
+}
+
+function useMedia(query) {
+  let [matches, setMatches] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(window.matchMedia(query).matches);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    let media = window.matchMedia(query);
+
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+
+    let listener = () => setMatches(media.matches);
+
+    media.addListener(listener);
+    return () => {
+      media.removeListener(listener);
+    };
+  }, [query]); // the second arg is componentDidUpdate
+
+  return matches;
+}
+
+function useWidth() {
+  const [width, setWidth] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(window.innerWidth);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+    return window.removeEventListener('resize', handleResize);
   });
   return width;
 }

@@ -1,6 +1,13 @@
 import React from 'react';
-import Greeting from './demo1'
+import Greeting from './greeting'
+import Media from './media'
 
 export default function App() {
-    return <div>Hello</div>
+    return (
+        <>
+            {/* <Greeting /> */}
+            <Media/>
+        </>
+    )
 }
+

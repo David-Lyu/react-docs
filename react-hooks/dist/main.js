@@ -7682,7 +7682,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_demo1__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 }
 
 /***/ }),
@@ -7699,9 +7699,71 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Greeting; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
- //time stamp 18:54
+ //time stamp: 
+//  useState 18:54
+//  context 28:30
+// life cycle methods 34:04
+// subscription: 38:48
 
-function Greeting() {}
+function Greeting(props) {
+  // const [name, setName] = useState("Mary"); //use the useFormInput
+  // const [surname, setSurname] = useState("Poppins");
+  const name = useFormInput('Mary');
+  const surname = useFormInput('Poppins');
+  const width = useWindowWidth();
+  useDocumentTitle(name + ' ' + surname); // useEffect(() => { //no longer needed from useDocumentTitle
+  //     document.title = `${name} ${surname}`
+  // })
+
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+
+  function handleSurnameChange(e) {
+    setSurname(e.target.value);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    label: "Name"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    label: "Surname"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Surname:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", surname)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    label: "Width"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Width"), width));
+}
+
+function useFormInput(initialValue) {
+  const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialValue);
+
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+
+  return {
+    value,
+    onChange: handleChange
+  };
+}
+
+function useDocumentTitle(title) {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    document.title = title;
+  });
+}
+
+function useWindowWidth() {
+  //custom hook -> by converntion custom hooks have use in the first part of the name
+  const [width, setWidth] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(window.innerWidth);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+  return width;
+}
 
 /***/ }),
 

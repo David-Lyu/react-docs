@@ -7680,7 +7680,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi");
+  const [counter, setCounter] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+  const color = getColor(counter);
+  console.log(counter);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    style: color,
+    onClick: () => {
+      setCounter(prevCount => prevCount + 1);
+    }
+  }, "HotButton");
+}
+
+function getColor(counter) {
+  const bg = {
+    backgroundColor: ""
+  };
+  const colors = ['purple', 'fuchsia', 'red', 'orange', 'yellow', 'white'];
+
+  if (counter === 0) {
+    bg.backgroundColor = "none";
+    return bg;
+  }
+
+  if (counter >= colors.length * 3) {
+    bg.backgroundColor = colors[colors.length - 1];
+  } else {
+    bg.backgroundColor = colors[Math.floor(counter / 3)];
+  }
+
+  return bg;
 }
 
 /***/ }),

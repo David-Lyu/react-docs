@@ -7681,7 +7681,24 @@ __webpack_require__.r(__webpack_exports__);
 
 function App() {
   const [isPlaying, setIsPlaying] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  const time = 0;
+  const [time, setTime] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+
+  function handleClick() {
+    setIsPlaying(prev => !prev);
+    console.log("isplaying1", isPlaying);
+    let timer = null;
+
+    if (isPlaying) {
+      console.log("inside timer");
+      timer = setInterval(() => {
+        setTime(prevTime => prevTime + 1);
+      }, 1000);
+    } else {
+      console.log("timer");
+      clearInterval(timer);
+    }
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -7689,34 +7706,8 @@ function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "number"
   }, time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    onClick: () => {
-      time = handleClick(isPlaying);
-    }
+    onClick: handleClick
   }, isPlaying && "stop" || "start"));
-}
-
-function handleClick() {
-  setIsPlaying(prevIsPlaying => !prevIsPlaying);
-  useGetTime(time);
-}
-
-function useGetTime(initialTime, isPlaying) {
-  const [time, setTime] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialTime);
-  let startTimerInterval = null;
-
-  if (isPlaying) {
-    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-      startTimerInterval = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
-      }, 1000);
-    });
-  }
-
-  if (!isPlaying) {
-    clearInterval(startTimerInterval);
-  }
-
-  return time;
 }
 
 /***/ }),

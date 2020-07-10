@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 export default function App() {
-    const [isPlaying,setIsPlaying] = useState(false);
-    const [time, setTime] = useState(0);
+    let isPlaying = false;
+    let time = useTimer(0)
 
     function handleClick() {
-        setIsPlaying(prev => !prev)
-        console.log("isplaying1", isPlaying)
-    let timer = null;
-        if(isPlaying) {
-            console.log("inside timer")
-            timer = setInterval(() => {
-                setTime(prevTime => prevTime + 1)
-            }, 1000);
-        } else {
-            console.log("timer")
-            clearInterval(timer)
-        }
+        isPlaying = usePlaying(isPlaying)
     }
 
     return (
@@ -29,4 +18,22 @@ export default function App() {
             </h1>
         </div>
     )
+}
+
+function usePlaying(initialVal) {
+    return !initialVal
+}
+
+function useTimer(initialVal, isPlaying) {
+    console.log(isPlaying)
+    const [time, setTime] = useState(initialVal);
+    let timer = null;
+    if(isPlaying) {
+        timer = setInterval(()=> {
+            setTime(prevTime => prevTime + 1)
+        }, 1000)
+    } else (
+        clearInterval(timer)
+    )
+    return time;
 }

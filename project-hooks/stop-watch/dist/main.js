@@ -7680,12 +7680,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function App() {
-  let isPlaying = false;
-  let time = useTimer(0);
+  const [isPlaying, setIsPlaying] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+  let alreadyPlayed = false;
+  let initialized = useTimer(0, isPlaying, alreadyPlayed);
+  alreadyPlayed = initialized.alreadyPlayed;
+  let time = initialized.time; // console.log(alreadyPlayed)
 
   function handleClick() {
-    isPlaying = usePlaying(isPlaying);
-  }
+    setIsPlaying(prevPlay => !prevPlay);
+  } // console.log(isPlaying, alreadyPlayed, time )
+
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
@@ -7698,22 +7702,25 @@ function App() {
   }, isPlaying && "stop" || "start"));
 }
 
-function usePlaying(initialVal) {
-  return !initialVal;
-}
-
-function useTimer(initialVal, isPlaying) {
-  console.log(isPlaying);
+function useTimer(initialVal, isPlaying, alreadyPlayed) {
+  console.log(alreadyPlayed);
   const [time, setTime] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialVal);
   let timer = null;
 
-  if (isPlaying) {
+  if (isPlaying && !alreadyPlayed) {
+    alreadyPlayed = true;
     timer = setInterval(() => {
       setTime(prevTime => prevTime + 1);
     }, 1000);
-  } else clearInterval(timer);
+  } else {
+    alreadyPlayed = false;
+    clearInterval(timer);
+  }
 
-  return time;
+  return {
+    time,
+    alreadyPlayed
+  };
 }
 
 /***/ }),

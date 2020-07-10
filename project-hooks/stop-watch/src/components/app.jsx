@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 export default function App() {
-    let isPlaying = false;
-    let time = useTimer(0)
+    const [isPlaying,setIsPlaying] = useState(false);
+    let alreadyPlayed = false;
+    let initialized  = useTimer(0, isPlaying, alreadyPlayed)
+    alreadyPlayed = initialized.alreadyPlayed
+    let time = initialized.time
+    // console.log(alreadyPlayed)
 
     function handleClick() {
-        isPlaying = usePlaying(isPlaying)
+        setIsPlaying(prevPlay => !prevPlay)
     }
+    // console.log(isPlaying, alreadyPlayed, time )
 
     return (
         <div className="container">
@@ -20,20 +25,21 @@ export default function App() {
     )
 }
 
-function usePlaying(initialVal) {
-    return !initialVal
-}
-
-function useTimer(initialVal, isPlaying) {
-    console.log(isPlaying)
+function useTimer(initialVal, isPlaying, alreadyPlayed) {
+    console.log(alreadyPlayed)
     const [time, setTime] = useState(initialVal);
     let timer = null;
-    if(isPlaying) {
+    if(isPlaying && !alreadyPlayed) {
+        alreadyPlayed = true;
         timer = setInterval(()=> {
             setTime(prevTime => prevTime + 1)
         }, 1000)
-    } else (
+    } else {
+        alreadyPlayed = false;
         clearInterval(timer)
-    )
-    return time;
+    }   
+    return {
+        time,
+        alreadyPlayed
+    }
 }

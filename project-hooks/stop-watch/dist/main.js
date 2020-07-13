@@ -7694,8 +7694,7 @@ function App() {
   function handleClick() {
     setIsPlaying(prevPlay => !prevPlay);
     setAlreadyPlayed(prevPlayed => !prevPlayed);
-  } // console.log(isPlaying, alreadyPlayed, time )
-
+  }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"

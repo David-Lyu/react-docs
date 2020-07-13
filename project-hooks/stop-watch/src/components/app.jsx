@@ -7,15 +7,15 @@ export default function App() {
     const timerInfo = useTimer(time, isPlaying, alreadyPlayed)
     console.log(timerInfo, alreadyPlayed)
     time = timerInfo.time
+    
     if(timerInfo.alreadyPlayed) {
         setAlreadyPlayed(timerInfo.alreadyPlayed)
     }
-
+    
     function handleClick() {
         setIsPlaying(prevPlay => !prevPlay)
         setAlreadyPlayed(prevPlayed => !prevPlayed)
     }
-    // console.log(isPlaying, alreadyPlayed, time )
 
     return (
         <div className="container">

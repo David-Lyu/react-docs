@@ -7681,13 +7681,19 @@ __webpack_require__.r(__webpack_exports__);
 
 function App() {
   const [isPlaying, setIsPlaying] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  let alreadyPlayed = false;
-  let initialized = useTimer(0, isPlaying, alreadyPlayed);
-  alreadyPlayed = initialized.alreadyPlayed;
-  let time = initialized.time; // console.log(alreadyPlayed)
+  const [alreadyPlayed, setAlreadyPlayed] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
+  let time = 0;
+  const timerInfo = useTimer(time, isPlaying, alreadyPlayed);
+  console.log(timerInfo, alreadyPlayed);
+  time = timerInfo.time;
+
+  if (timerInfo.alreadyPlayed) {
+    setAlreadyPlayed(timerInfo.alreadyPlayed);
+  }
 
   function handleClick() {
     setIsPlaying(prevPlay => !prevPlay);
+    setAlreadyPlayed(prevPlayed => !prevPlayed);
   } // console.log(isPlaying, alreadyPlayed, time )
 
 
@@ -7703,7 +7709,6 @@ function App() {
 }
 
 function useTimer(initialVal, isPlaying, alreadyPlayed) {
-  console.log(alreadyPlayed);
   const [time, setTime] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialVal);
   let timer = null;
 
@@ -7713,6 +7718,7 @@ function useTimer(initialVal, isPlaying, alreadyPlayed) {
       setTime(prevTime => prevTime + 1);
     }, 1000);
   } else {
+    console.log(alreadyPlayed);
     alreadyPlayed = false;
     clearInterval(timer);
   }

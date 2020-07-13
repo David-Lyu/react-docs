@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 export default function App() {
     const [isPlaying,setIsPlaying] = useState(false);
-    let alreadyPlayed = false;
-    let initialized  = useTimer(0, isPlaying, alreadyPlayed)
-    alreadyPlayed = initialized.alreadyPlayed
-    let time = initialized.time
-    // console.log(alreadyPlayed)
+    const [alreadyPlayed, setAlreadyPlayed] = useState(true)
+    let time = 0;
+    const timerInfo = useTimer(time, isPlaying, alreadyPlayed)
+    console.log(timerInfo, alreadyPlayed)
+    time = timerInfo.time
+    if(timerInfo.alreadyPlayed) {
+        setAlreadyPlayed(timerInfo.alreadyPlayed)
+    }
 
     function handleClick() {
         setIsPlaying(prevPlay => !prevPlay)
+        setAlreadyPlayed(prevPlayed => !prevPlayed)
     }
     // console.log(isPlaying, alreadyPlayed, time )
 
@@ -25,8 +29,7 @@ export default function App() {
     )
 }
 
-function useTimer(initialVal, isPlaying, alreadyPlayed) {
-    console.log(alreadyPlayed)
+function useTimer(initialVal, isPlaying, alreadyPlayed ) {
     const [time, setTime] = useState(initialVal);
     let timer = null;
     if(isPlaying && !alreadyPlayed) {
@@ -35,6 +38,7 @@ function useTimer(initialVal, isPlaying, alreadyPlayed) {
             setTime(prevTime => prevTime + 1)
         }, 1000)
     } else {
+        console.log(alreadyPlayed)
         alreadyPlayed = false;
         clearInterval(timer)
     }   

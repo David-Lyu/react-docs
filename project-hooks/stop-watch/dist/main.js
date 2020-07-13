@@ -7678,54 +7678,77 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+ // export default function App() {
+//     const [isPlaying,setIsPlaying] = useState(false);
+//     let time = 0;
+//     time = useTimer(time, isPlaying)
+//     function handleClick() {
+//         setIsPlaying(prevPlay => !prevPlay)
+//     }
+//     return (
+//         <div className="container">
+//             <div className="stop-watch-container">
+//                 <div className="number">{time}</div>
+//             </div>
+//             <h1 onClick={handleClick}>
+//                 {isPlaying && "stop" || "start"}
+//             </h1>
+//         </div>
+//     )
+// }
+// function useTimer(initialVal, isPlaying) {
+//     const [time, setTime] = useState(initialVal);
+//     debugger
+//     let timer = null;
+//     console.log(isPlaying,timer)
+//     useEffect(() => {
+//         if(isPlaying && !timer) {
+//             timer = setInterval(()=> {
+//                 setTime(prevTime => prevTime + 1)
+//             }, 1000)
+//         } else {
+//             clearInterval(timer)
+//         }
+//     })
+//     return time
+// }
 
 function App() {
-  const [isPlaying, setIsPlaying] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  const [alreadyPlayed, setAlreadyPlayed] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true);
-  let time = 0;
-  const timerInfo = useTimer(time, isPlaying, alreadyPlayed);
-  console.log(timerInfo, alreadyPlayed);
-  time = timerInfo.time;
+  const [playOnClick, setPlayOnClick] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+  const [timer, setTimer] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+  const [playClass, setPlayClass] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("");
+  const timerInterval = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
 
-  if (timerInfo.alreadyPlayed) {
-    setAlreadyPlayed(timerInfo.alreadyPlayed);
-  }
+  function handleClick(event) {
+    if (event.target.className.indexOf("timer") !== -1 && !playOnClick) {
+      setTimer(0);
+    }
 
-  function handleClick() {
-    setIsPlaying(prevPlay => !prevPlay);
-    setAlreadyPlayed(prevPlayed => !prevPlayed);
+    if (event.target.className.indexOf("play") !== -1) {
+      timerInterval.current = setInterval(() => {
+        setTimer(prevTime => prevTime + 1);
+      }, 1000);
+      setPlayOnClick(true);
+      setPlayClass('hidden');
+    }
+
+    if (event.target.className.indexOf('pause') !== -1) {
+      clearInterval(timerInterval.current);
+      setPlayOnClick(false);
+      setPlayClass("");
+    }
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
+    onClick: handleClick,
+    className: 'container'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "stop-watch-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "number"
-  }, time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    onClick: handleClick
-  }, isPlaying && "stop" || "start"));
-}
-
-function useTimer(initialVal, isPlaying, alreadyPlayed) {
-  const [time, setTime] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialVal);
-  let timer = null;
-
-  if (isPlaying && !alreadyPlayed) {
-    alreadyPlayed = true;
-    timer = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
-  } else {
-    console.log(alreadyPlayed);
-    alreadyPlayed = false;
-    clearInterval(timer);
-  }
-
-  return {
-    time,
-    alreadyPlayed
-  };
+    className: 'timer stuff stuff'
+  }, timer), !playClass && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: 'play fas fa-play fa-3x'
+  }) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: 'fas fa-pause pause fa-3x'
+  }));
 }
 
 /***/ }),

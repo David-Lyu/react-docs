@@ -7680,7 +7680,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Carousel");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "contianer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Carousel, null));
+}
+
+function Carousel() {
+  const [counter, setCounter] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+  const imgArr = createImg();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const interval = setInterval(() => {
+      if (counter >= imgArr.length) {
+        setCounter(0);
+      } else {
+        setCounter(prev => prev + 1);
+      }
+    }, 1000);
+  }, []);
+  console.log(counter);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, imgArr[counter]);
+}
+
+function createImg() {
+  const path = '../src/photos/';
+  const imgPathArr = [path + 'pic1.jpg', path + 'pic2.jpg', path + 'pic3.jpg', path + 'pic4.jpg'];
+  const imgArr = [];
+
+  for (let i = 0; i < imgPathArr.length; i++) {
+    imgArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: imgPathArr[i],
+      alt: "sample pic"
+    }));
+  }
+
+  return imgArr;
 }
 
 /***/ }),

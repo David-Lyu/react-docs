@@ -13,7 +13,6 @@ function Carousel() {
     const imgArr = createImg()
     const interval = useRef()
 
-    //useEffect works need to have it reset
     useEffect(() => {
         interval.current = setInterval(() => {
             setCounter(prev => prev + 1)

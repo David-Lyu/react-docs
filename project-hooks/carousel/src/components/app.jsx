@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function App() {
     return (
-        <div className = "contianer" >
-            <Carousel/>
+        <div className="contianer" >
+            <Carousel />
         </div>
     )
 }
@@ -11,20 +11,29 @@ export default function App() {
 function Carousel() {
     const [counter, setCounter] = useState(0)
     const imgArr = createImg()
+    const interval = useRef()
+
+    //useEffect works need to have it reset
+    useEffect(() => {
+        interval.current = setInterval(() => {
+            setCounter(prev => prev + 1)
+        }, 3000)
+    }, [])
 
     useEffect(() => {
-        const interval = setInterval( () => {
-            if(counter >= imgArr.length) {
+            if(counter >= imgArr.length){
                 setCounter(0)
-            } else {
-                setCounter( prev => prev + 1)
             }
-        }, 1000)
-    }, [])
-    console.log(counter)
+            if(counter < 0) {
+                setCounter(imgArr.length - 1)
+            }
+    }, [counter])
+
     return (
-        <div>
+        <div className="container">
+            <div className="back" onClick={(e) => handleClick(e, setCounter, interval)}> {'<-'} </div>
             {imgArr[counter]}
+            <div className="forward" onClick={(e) => handleClick(e,setCounter, interval)}> {"->"} </div>
         </div>
     )
 
@@ -32,12 +41,24 @@ function Carousel() {
 
 function createImg() {
     const path = '../src/photos/'
-    const imgPathArr = [path + 'pic1.jpg',path + 'pic2.jpg', path + 'pic3.jpg', path + 'pic4.jpg'];
+    const imgPathArr = [path + 'pic1.jpg', path + 'pic2.jpg', path + 'pic3.jpg', path + 'pic4.jpg'];
 
     const imgArr = [];
-    for(let i = 0; i < imgPathArr.length; i++) {
-        imgArr.push(<img src={imgPathArr[i]} alt="sample pic"/>)
+    for (let i = 0; i < imgPathArr.length; i++) {
+        imgArr.push(<img src={imgPathArr[i]} alt="sample pic" />)
     }
-    
+
     return imgArr
+}
+
+function handleClick(e, setCounter, interval) {
+    clearInterval(interval.current)
+    if(e.currentTarget.className.includes("forward")) {
+        setCounter(prev => prev + 1)
+    } else {
+        setCounter(prev => prev - 1)
+    }
+    interval.current = setInterval(() => {
+        setCounter(prev => prev + 1)
+    }, 3000)
 }

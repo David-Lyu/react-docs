@@ -7688,17 +7688,31 @@ function App() {
 function Carousel() {
   const [counter, setCounter] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
   const imgArr = createImg();
+  const interval = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(); //useEffect works need to have it reset
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    const interval = setInterval(() => {
-      if (counter >= imgArr.length) {
-        setCounter(0);
-      } else {
-        setCounter(prev => prev + 1);
-      }
-    }, 1000);
+    interval.current = setInterval(() => {
+      setCounter(prev => prev + 1);
+    }, 3000);
   }, []);
-  console.log(counter);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, imgArr[counter]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    if (counter >= imgArr.length) {
+      setCounter(0);
+    }
+
+    if (counter < 0) {
+      setCounter(imgArr.length - 1);
+    }
+  }, [counter]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "back",
+    onClick: e => handleClick(e, setCounter, interval)
+  }, " ", '<-', " "), imgArr[counter], /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "forward",
+    onClick: e => handleClick(e, setCounter, interval)
+  }, " ", "->", " "));
 }
 
 function createImg() {
@@ -7714,6 +7728,20 @@ function createImg() {
   }
 
   return imgArr;
+}
+
+function handleClick(e, setCounter, interval) {
+  clearInterval(interval.current);
+
+  if (e.currentTarget.className.includes("forward")) {
+    setCounter(prev => prev + 1);
+  } else {
+    setCounter(prev => prev - 1);
+  }
+
+  interval.current = setInterval(() => {
+    setCounter(prev => prev + 1);
+  }, 3000);
 }
 
 /***/ }),

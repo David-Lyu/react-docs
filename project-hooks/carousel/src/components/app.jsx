@@ -20,19 +20,19 @@ function Carousel() {
     }, [])
 
     useEffect(() => {
-            if(counter >= imgArr.length){
-                setCounter(0)
-            }
-            if(counter < 0) {
-                setCounter(imgArr.length - 1)
-            }
+        if (counter >= imgArr.length) {
+            setCounter(0)
+        }
+        if (counter < 0) {
+            setCounter(imgArr.length - 1)
+        }
     }, [counter])
 
     return (
         <div className="container">
             <div className="back" onClick={(e) => handleClick(e, setCounter, interval)}> {'<-'} </div>
             {imgArr[counter]}
-            <div className="forward" onClick={(e) => handleClick(e,setCounter, interval)}> {"->"} </div>
+            <div className="forward" onClick={(e) => handleClick(e, setCounter, interval)}> {"->"} </div>
         </div>
     )
 
@@ -52,7 +52,7 @@ function createImg() {
 
 function handleClick(e, setCounter, interval) {
     clearInterval(interval.current)
-    if(e.currentTarget.className.includes("forward")) {
+    if (e.currentTarget.className.includes("forward")) {
         setCounter(prev => prev + 1)
     } else {
         setCounter(prev => prev - 1)

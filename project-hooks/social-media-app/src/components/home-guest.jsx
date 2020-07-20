@@ -1,8 +1,9 @@
 import React from 'react';
+import Page from './page'
 
 export default function HomeGuest() {
     return (
-        <div className="container py-md-5">
+        <Page wide={true} title="Home Page">
             <div className="row align-items-center">
                 <div className="col-lg-7 py-3 py-md-5">
                     <h1 className="display-3">Rember Writing?</h1>
@@ -69,6 +70,6 @@ export default function HomeGuest() {
                     </form>
                 </div>
             </div>
-        </div>
+        </Page>
     )
 }

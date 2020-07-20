@@ -12,13 +12,13 @@ export default function App() {
         <BrowserRouter>
             <Header></Header>
             <Switch>
-                <Route path="/dist/index.html" exact>
+                <Route path="/" exact>
                     <HomeGuest />
                 </Route>
-                <Route path="/dist/index.html/about">
+                <Route path="/about">
                     <About />
                 </Route>
-                <Route path="/dist/index.html/terms">
+                <Route path="/terms">
                     <Terms />
                 </Route>
             </Switch>

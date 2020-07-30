@@ -2,6 +2,25 @@ import React from 'react';
 import Page from './page'
 
 export default function HomeGuest() {
+
+    function handleSubmit(e) {
+        const FORMCHILDREN = e.currentTarget.children;
+        e.preventDefault();
+        fetch('/register', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application.json"
+            },
+            body: JSON.stringify({
+                username: FORMCHILDREN[0].children[1].value,
+                password: FORMCHILDREN[1].children[1].value,
+                password: FORMCHILDREN[2].children[1].value
+            })
+        })
+            .then(results => results.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error))
+    }
     return (
         <Page wide={true} title="Home Page">
             <div className="row align-items-center">
@@ -16,7 +35,7 @@ export default function HomeGuest() {
                     </p>
                 </div>
                 <div className="col-lg-5 pl-lg-5 pb-3 py-lg-5">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label
                                 htmlFor="username-register"

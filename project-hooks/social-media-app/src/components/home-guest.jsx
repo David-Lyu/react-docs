@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Page from './page'
 
 export default function HomeGuest() {
+    const [userName, setUserName] = useState();
+    const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
 
     function handleSubmit(e) {
         const FORMCHILDREN = e.currentTarget.children;
         e.preventDefault();
-        fetch('/register', {
+        fetch('http://localhost:8080/register', {
             method: "POST",
             headers: {
-                "Content-Type": "application.json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username: FORMCHILDREN[0].children[1].value,
-                password: FORMCHILDREN[1].children[1].value,
-                password: FORMCHILDREN[2].children[1].value
+                username: userName,
+                email,
+                password
             })
         })
             .then(results => results.json())
@@ -50,6 +53,7 @@ export default function HomeGuest() {
                                 type="text"
                                 placeholder="Pick a username"
                                 autoComplete="off"
+                                onChange={e => setUserName(e.target.value)}
                             />
                         </div>
                         <div className="form-group">
@@ -63,6 +67,7 @@ export default function HomeGuest() {
                                 type="text"
                                 placeholder="you@example.com"
                                 autoComplete="off"
+                                onChange={e => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="form-group">
@@ -78,6 +83,7 @@ export default function HomeGuest() {
                                 className="form-control"
                                 type="password"
                                 placeholder="Create a password"
+                                onChange={e => setPassword(e.target.value)}
                             />
                         </div>
                         <button

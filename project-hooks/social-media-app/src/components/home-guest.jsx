@@ -21,7 +21,12 @@ export default function HomeGuest() {
             })
         })
             .then(results => results.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+                setUserName("");
+                setPassword("");
+                setEmail("");
+            })
             .catch(error => console.error(error))
     }
     return (

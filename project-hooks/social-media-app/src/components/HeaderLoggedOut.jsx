@@ -17,8 +17,14 @@ function HeaderLoggedOut() {
                 password
             })
         })
-            .then(responce => responce.json())
-            .then(data => console.log(data))
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    console.log(data);
+                } else {
+                    console.log("incorrect username/password")
+                }
+            })
             .catch(error => console.error)
     }
 

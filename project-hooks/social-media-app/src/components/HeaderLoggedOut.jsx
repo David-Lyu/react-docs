@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-function HeaderLoggedOut() {
+function HeaderLoggedOut(props) {
 
     const [userName, setUserName] = useState();
     const [password, setPassword] = useState();
@@ -20,6 +20,7 @@ function HeaderLoggedOut() {
             .then(response => response.json())
             .then(data => {
                 if (data) {
+                    console.log(props.setLoggedIn(true));
                     console.log(data);
                 } else {
                     console.log("incorrect username/password")

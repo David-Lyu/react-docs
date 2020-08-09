@@ -4,7 +4,7 @@ import HeaderLoggedOut from './HeaderLoggedOut';
 import HeaderLoggedIn from './HeaderLoggedIn';
 
 export default function Header() {
-    const [loggedIn, setLoggedIn] = useState("false")
+    const [loggedIn, setLoggedIn] = useState(false)
 
     return (
         <header className="header-bar bg-primary mb-3">
@@ -17,7 +17,10 @@ export default function Header() {
                     </Link>
                 </h4>
                 {
-                    loggedIn ? <HeaderLoggedOut /> : <HeaderLoggedIn setLoggedIn={setLoggedIn} />
+                    loggedIn ?
+                        <HeaderLoggedIn setLoggedIn={setLoggedIn} />
+                        :
+                        <HeaderLoggedOut setLoggedIn={setLoggedIn} />
                 }
             </div>
         </header>

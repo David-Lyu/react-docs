@@ -20,8 +20,10 @@ function HeaderLoggedOut(props) {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    console.log(props.setLoggedIn(true));
-                    console.log(data);
+                    props.setLoggedIn(true);
+                    localStorage.setItem("complexAppToken", data.token);
+                    localStorage.setItem("complexAppUsername", data.username);
+                    localStorage.setItem("complexAppAvatar", data.avatar);
                 } else {
                     console.log("incorrect username/password")
                 }

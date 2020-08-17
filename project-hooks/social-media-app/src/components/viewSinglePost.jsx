@@ -1,9 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Page from './page'
+import { useParams } from 'react-router-dom'
 
 function ViewSinglePost() {
+    let { postId } = useParams();
     return (
-        <Page title="Fake Single Post">
+        <Page title="Fake HardCoded Title">
             <div className="d-flex justify-content-between">
                 <h2>Example Post Title</h2>
                 <span className="pt-2">
@@ -11,7 +13,6 @@ function ViewSinglePost() {
                     <a className="delete-post-button text-danger" title="Delete"><i className="fas fa-trash"></i></a>
                 </span>
             </div>
-
             <p className="text-muted small mb-4">
                 <a href="#">
                     <img className="avatar-tiny" src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128" />

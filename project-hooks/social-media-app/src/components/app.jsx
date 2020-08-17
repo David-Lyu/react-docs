@@ -9,12 +9,19 @@ import About from './about'
 import Terms from './terms'
 import CreatePost from './createPost'
 import ViewSinglePost from './viewSinglePost'
+import FlashMessages from './flashMessages'
 
 export default function App() {
     const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("complexAppToken"))
+    const [flashMessages, setFlashMessages] = useState([])
+
+    function addFlashMessage(msg) {
+        setFlashMessages(prev => prev.concat(msg))
+    }
 
     return (
         <BrowserRouter>
+            <FlashMessages messages={flashMessages} />
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}></Header>
             <Switch>
                 <Route path="/" exact>
@@ -25,12 +32,11 @@ export default function App() {
                             <HomeGuest />
                     }
                 </Route>
-                <Route path='/create-post'>
-                    <CreatePost />
-                </Route>
-                <Route path="/post">
+                <Route path="/post/:postId">
                     <ViewSinglePost />
-                    {/* { 4:13 time stamp} */}
+                </Route>
+                <Route path='/create-post'>
+                    <CreatePost addFlashMessage={addFlashMessage} />
                 </Route>
                 <Route path="/about">
                     <About />

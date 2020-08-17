@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import HeaderLoggedOut from './HeaderLoggedOut';
 import HeaderLoggedIn from './HeaderLoggedIn';
 
-export default function Header() {
-    const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("complexAppToken"))
+export default function Header(props) {
+
 
     return (
         <header className="header-bar bg-primary mb-3">
@@ -17,10 +17,10 @@ export default function Header() {
                     </Link>
                 </h4>
                 {
-                    loggedIn ?
-                        <HeaderLoggedIn setLoggedIn={setLoggedIn} />
+                    props.loggedIn ?
+                        <HeaderLoggedIn setLoggedIn={props.setLoggedIn} />
                         :
-                        <HeaderLoggedOut setLoggedIn={setLoggedIn} />
+                        <HeaderLoggedOut setLoggedIn={props.setLoggedIn} />
                 }
             </div>
         </header>

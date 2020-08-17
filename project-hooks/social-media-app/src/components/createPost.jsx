@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import Page from './page'
+import { withRouter } from 'react-router-dom'
 
-function CreatePost() {
+function CreatePost(props) {
 
     const [title, setTitle] = useState();
     const [body, setBody] = useState();
@@ -20,7 +21,10 @@ function CreatePost() {
             })
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                props.history.push(`/post/${data}`)
+                props.addFlashMessage("New Post was created")
+            })
             .catch(e => console.error(e))
     }
 
@@ -47,4 +51,4 @@ function CreatePost() {
     )
 }
 
-export default CreatePost
+export default withRouter(CreatePost)

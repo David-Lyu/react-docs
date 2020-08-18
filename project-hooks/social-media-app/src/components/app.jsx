@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import ExampleContext from '../app/exampleContext'
 
 import Header from './header'
 import Home from './Home'
@@ -12,6 +13,13 @@ import ViewSinglePost from './viewSinglePost'
 import FlashMessages from './flashMessages'
 
 export default function App() {
+
+    const initialState = {};
+    function ourReducer() {
+
+    }
+    const [state, dispatch] = useReducer(ourReducer, initialState)
+
     const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("complexAppToken"))
     const [flashMessages, setFlashMessages] = useState([])
 
@@ -20,32 +28,34 @@ export default function App() {
     }
 
     return (
-        <BrowserRouter>
-            <FlashMessages messages={flashMessages} />
-            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}></Header>
-            <Switch>
-                <Route path="/" exact>
-                    {
-                        loggedIn ?
-                            <Home />
-                            :
-                            <HomeGuest />
-                    }
-                </Route>
-                <Route path="/post/:postId">
-                    <ViewSinglePost />
-                </Route>
-                <Route path='/create-post'>
-                    <CreatePost addFlashMessage={addFlashMessage} />
-                </Route>
-                <Route path="/about">
-                    <About />
-                </Route>
-                <Route path="/terms">
-                    <Terms />
-                </Route>
-            </Switch>
-            <Footer />
-        </BrowserRouter>
+        <ExampleContext.Provider value={{ addFlashMessage, setLoggedIn, loggedIn }}>
+            <BrowserRouter>
+                <FlashMessages messages={flashMessages} />
+                <Header></Header>
+                <Switch>
+                    <Route path="/" exact>
+                        {
+                            loggedIn ?
+                                <Home />
+                                :
+                                <HomeGuest />
+                        }
+                    </Route>
+                    <Route path="/post/:postId">
+                        <ViewSinglePost />
+                    </Route>
+                    <Route path='/create-post'>
+                        <CreatePost />
+                    </Route>
+                    <Route path="/about">
+                        <About />
+                    </Route>
+                    <Route path="/terms">
+                        <Terms />
+                    </Route>
+                </Switch>
+                <Footer />
+            </BrowserRouter>
+        </ExampleContext.Provider>
     )
 }

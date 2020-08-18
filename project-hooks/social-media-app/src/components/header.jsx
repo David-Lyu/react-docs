@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderLoggedOut from './HeaderLoggedOut';
 import HeaderLoggedIn from './HeaderLoggedIn';
+import ExampleContext from '../app/exampleContext';
 
 export default function Header(props) {
-
+    const { loggedIn } = useContext(ExampleContext)
 
     return (
         <header className="header-bar bg-primary mb-3">
@@ -17,10 +18,10 @@ export default function Header(props) {
                     </Link>
                 </h4>
                 {
-                    props.loggedIn ?
-                        <HeaderLoggedIn setLoggedIn={props.setLoggedIn} />
+                    loggedIn ?
+                        <HeaderLoggedIn />
                         :
-                        <HeaderLoggedOut setLoggedIn={props.setLoggedIn} />
+                        <HeaderLoggedOut />
                 }
             </div>
         </header>

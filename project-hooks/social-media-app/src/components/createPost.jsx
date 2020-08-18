@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Page from './page'
 import { withRouter } from 'react-router-dom'
+import ExampleContext from '../app/exampleContext'
 
 function CreatePost(props) {
 
     const [title, setTitle] = useState();
     const [body, setBody] = useState();
+    const { addFlashMessage } = useContext(ExampleContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -23,7 +25,7 @@ function CreatePost(props) {
             .then(response => response.json())
             .then(data => {
                 props.history.push(`/post/${data}`)
-                props.addFlashMessage("New Post was created")
+                addFlashMessage("New Post was created")
             })
             .catch(e => console.error(e))
     }

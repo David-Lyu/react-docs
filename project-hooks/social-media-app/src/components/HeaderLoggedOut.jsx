@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
+import ExampleContext from '../app/exampleContext'
 
 function HeaderLoggedOut(props) {
-
+    const { setLoggedIn } = useContext(ExampleContext);
     const [userName, setUserName] = useState();
     const [password, setPassword] = useState();
 
@@ -20,7 +21,7 @@ function HeaderLoggedOut(props) {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    props.setLoggedIn(true);
+                    setLoggedIn(true);
                     localStorage.setItem("complexAppToken", data.token);
                     localStorage.setItem("complexAppUsername", data.username);
                     localStorage.setItem("complexAppAvatar", data.avatar);

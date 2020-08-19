@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react"
-import ExampleContext from '../app/exampleContext'
+import { DispatchContext } from '../app/Context'
 
 function HeaderLoggedOut(props) {
-    const { setLoggedIn } = useContext(ExampleContext);
+    const appDispatch = useContext(DispatchContext);
     const [userName, setUserName] = useState();
     const [password, setPassword] = useState();
 
@@ -21,10 +21,7 @@ function HeaderLoggedOut(props) {
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    setLoggedIn(true);
-                    localStorage.setItem("complexAppToken", data.token);
-                    localStorage.setItem("complexAppUsername", data.username);
-                    localStorage.setItem("complexAppAvatar", data.avatar);
+                    appDispatch({ type: "login", data });
                 } else {
                     console.log("incorrect username/password")
                 }

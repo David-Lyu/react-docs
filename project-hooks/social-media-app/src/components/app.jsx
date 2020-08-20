@@ -12,6 +12,7 @@ import Terms from './terms'
 import CreatePost from './createPost'
 import ViewSinglePost from './viewSinglePost'
 import FlashMessages from './flashMessages'
+import Profile from './profile'
 
 export default function App() {
 
@@ -20,7 +21,7 @@ export default function App() {
         flashMessages: [],
         user: {
             token: localStorage.getItem('complexAppToken'),
-            userName: localStorage.getItem('complexAppUsername'),
+            username: localStorage.getItem('complexAppUsername'),
             avatar: localStorage.getItem('complexAppAvatar')
         }
     };
@@ -60,6 +61,9 @@ export default function App() {
                     <FlashMessages messages={state.flashMessages} />
                     <Header />
                     <Switch>
+                        <Route path="/profile/:username">
+                            <Profile />
+                        </Route>
                         <Route path="/" exact>
                             {
                                 state.loggedIn ?

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react"
 import { useParams, Link } from 'react-router-dom'
 
+import LoadingDotIcon from './loadingDotIcon'
+
 function ProfilePost() {
     const { username } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [post, setPost] = useState([])
 
     useEffect(() => {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
         async function fetchPosts() {
-            fetch(`http://localhost:8080/profile/${username}/posts`)
+            fetch(`http://localhost:8080/profile/${username}/posts`, { signal })
                 .then(response => response.json())
                 .then(data => {
                     setPost(data)
@@ -17,9 +22,12 @@ function ProfilePost() {
                 .catch(error => console.error(error))
         }
         fetchPosts();
+        return () => {
+            abortController.abort();
+        }
     }, [])
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <LoadingDotIcon />
     return (
         <div className="list-group">
             {post.map((post) => {
@@ -28,7 +36,7 @@ function ProfilePost() {
                 return (
                     <Link key={post._id} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
                         <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong>
-                        {/* {" "} */}
+                        {" "}
                         <span className="text-muted small">{dateFormatted}</span>
                     </Link>
                 )

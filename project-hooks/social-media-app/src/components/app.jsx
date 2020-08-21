@@ -13,6 +13,8 @@ import CreatePost from './createPost'
 import ViewSinglePost from './viewSinglePost'
 import FlashMessages from './flashMessages'
 import Profile from './profile'
+import EditPost from './editpost'
+import NotFound from './notFound'
 
 export default function App() {
 
@@ -72,8 +74,11 @@ export default function App() {
                                     <HomeGuest />
                             }
                         </Route>
-                        <Route path="/post/:postId">
+                        <Route path="/post/:postId" exact>
                             <ViewSinglePost />
+                        </Route>
+                        <Route path="/post/:postId/edit" exact>
+                            <EditPost />
                         </Route>
                         <Route path='/create-post'>
                             <CreatePost />
@@ -84,10 +89,13 @@ export default function App() {
                         <Route path="/terms">
                             <Terms />
                         </Route>
+                        <Route>
+                            <NotFound />
+                        </Route>
                     </Switch>
                     <Footer />
                 </BrowserRouter>
             </DispatchContext.Provider>
-        </StateContext.Provider>
+        </StateContext.Provider >
     )
 }

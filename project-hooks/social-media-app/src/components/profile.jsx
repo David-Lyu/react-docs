@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { StateContext } from '../app/Context'
 import Page from './page'
 import ProfilePost from './profile-post'
+import LoadingDotIcon from './loadingDotIcon'
 
 function Profile() {
     const { username } = useParams();
@@ -10,7 +11,11 @@ function Profile() {
     const appState = useContext(StateContext)
 
     useEffect(() => {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
         async function getPostData() {
+
             await fetch(`http://localhost:8080/profile/${username}`, {
                 method: 'post',
                 headers: {
@@ -18,17 +23,25 @@ function Profile() {
                 },
                 body: JSON.stringify({
                     token: appState.user.tolken
-                })
+                }),
+                signal
             })
                 .then(responce => responce.json())
                 .then(data => { setProfileData(data) })
                 .catch(error => console.error(error))
         }
+
         getPostData()
+        return () => {
+            abortController.abort();
+        }
     }, [])
 
+    if (profileData.length === 0) return (
+        <LoadingDotIcon />
+    )
+
     return (
-        profileData.length === 0 && "Loading" ||
         <Page title="profile screen">
             <h2>
                 <img className="avatar-small" src={profileData.profileAvatar} /> {profileData.profileUsername}

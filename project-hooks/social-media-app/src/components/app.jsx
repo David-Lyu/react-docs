@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useImmerReducer } from 'use-immer'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { StateContext, DispatchContext } from '../app/Context'
+import { CSSTransition } from 'react-transition-group'
 
 import Header from './header'
 import Home from './Home'
@@ -15,6 +16,7 @@ import FlashMessages from './flashMessages'
 import Profile from './profile'
 import EditPost from './editpost'
 import NotFound from './notFound'
+import Search from './search'
 
 export default function App() {
 
@@ -25,7 +27,8 @@ export default function App() {
             token: localStorage.getItem('complexAppToken'),
             username: localStorage.getItem('complexAppUsername'),
             avatar: localStorage.getItem('complexAppAvatar')
-        }
+        },
+        isSearchOpen: false
     };
     function ourReducer(draft, action) {
         switch (action.type) {
@@ -40,6 +43,12 @@ export default function App() {
                 break;
             case "flashMessage":
                 draft.flashMessages.push(action.value);
+                break;
+            case "openSearch":
+                draft.isSearchOpen = true;
+                break;
+            case "closeSearch":
+                draft.isSearchOpen = false;
                 break;
         }
     }
@@ -93,6 +102,9 @@ export default function App() {
                             <NotFound />
                         </Route>
                     </Switch>
+                    <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
+                        <Search />
+                    </CSSTransition>
                     <Footer />
                 </BrowserRouter>
             </DispatchContext.Provider>

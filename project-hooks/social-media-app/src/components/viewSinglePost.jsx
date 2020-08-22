@@ -35,7 +35,7 @@ function ViewSinglePost(props) {
         return () => {
             abortController.abort();
         }
-    }, [])
+    }, [postId])
 
     if (!isLoading && !post) {
         return <NotFound />

@@ -65,8 +65,8 @@ function ViewSinglePost(props) {
             })
                 .then(response => response.json())
                 .then(() => {
+                    props.history.push(`/profile/${appState.user.username}`)
                     appDispatch({ type: "delete", value: "Successfully deleted" })
-                    props.history.push(`/post/{}:postId}`)
                 })
 
                 .catch(e => console.error(e))

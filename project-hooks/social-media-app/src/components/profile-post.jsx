@@ -25,7 +25,7 @@ function ProfilePost() {
         return () => {
             abortController.abort();
         }
-    }, [])
+    }, [username])
 
     if (isLoading) return <LoadingDotIcon />
     return (

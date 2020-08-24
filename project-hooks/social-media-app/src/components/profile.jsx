@@ -1,10 +1,12 @@
 import React, { useEffect, useContext } from "react"
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink, Switch, Route } from 'react-router-dom'
 import { StateContext } from '../app/Context'
 import { useImmer } from 'use-immer'
 import Page from './page'
 import ProfilePost from './profile-post'
 import LoadingDotIcon from './loadingDotIcon'
+import ProfileFollowers from "./profile-followers"
+import ProfileFollowing from "./profile-following"
 
 function Profile() {
     const { username } = useParams();
@@ -150,18 +152,28 @@ function Profile() {
             </h2>
 
             <div className="profile-nav nav nav-tabs pt-2 mb-4">
-                <a href="#" className="active nav-item nav-link">
+                <NavLink exact to={`/profile/${state.profileData.profileUsername}`} className="nav-item nav-link">
                     Posts: {state.profileData.counts.postCount}
-                </a>
-                <a href="#" className="nav-item nav-link">
+                </NavLink>
+                <NavLink to={`/profile/${state.profileData.profileUsername}/followers`} className="nav-item nav-link">
                     Followers: {state.profileData.counts.followerCount}
-                </a>
-                <a href="#" className="nav-item nav-link">
+                </NavLink>
+                <NavLink to={`/profile/${state.profileData.profileUsername}/following`} className="nav-item nav-link">
                     Following: {state.profileData.counts.followingCount}
-                </a>
+                </NavLink>
             </div>
 
-            <ProfilePost />
+            <Switch>
+                <Route exact path="/profile/:username">
+                    <ProfilePost />
+                </Route>
+                <Route path="/profile/:username/followers">
+                    <ProfileFollowers />
+                </Route>
+                <Route path="/profile/:username/following">
+                    <ProfileFollowing />
+                </Route>
+            </Switch>
         </Page>
     )
 }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { useParams } from 'react-router-dom'
-import Post from './post'
+import { useParams, Link } from 'react-router-dom'
 
 import LoadingDotIcon from './loadingDotIcon'
 
-function ProfilePost() {
+function ProfileFollowers() {
     const { username } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [post, setPost] = useState([])
@@ -14,7 +13,7 @@ function ProfilePost() {
         const signal = abortController.signal;
 
         async function fetchPosts() {
-            fetch(`http://localhost:8080/profile/${username}/posts`, { signal })
+            fetch(`http://localhost:8080/profile/${username}/followers`, { signal })
                 .then(response => response.json())
                 .then(data => {
                     setPost(data)
@@ -31,11 +30,15 @@ function ProfilePost() {
     if (isLoading) return <LoadingDotIcon />
     return (
         <div className="list-group">
-            {post.map((post) => {
-                return <Post noAuthor={true} post={post} key={post._id}></Post>
+            {post.map((follower, index) => {
+                return (
+                    <Link key={index} to={`/profile/${follower.username}`} className="list-group-item list-group-item-action">
+                        <img className="avatar-tiny" src={follower.avatar} /> {follower.username}
+                    </Link>
+                )
             })}
         </div>
     )
 }
 
-export default ProfilePost
+export default ProfileFollowers

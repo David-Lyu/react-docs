@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react"
 import { DispatchContext } from "../app/Context"
 import { useImmer } from 'use-immer' //similar to useState
-import { Link } from 'react-router-dom'
 import Post from './post'
 
 function Search() {

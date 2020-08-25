@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import { Link } from 'react-router-dom'
 import { StateContext, DispatchContext } from '../app/Context'
 import ReactTooltip from "react-tooltip";
@@ -23,7 +23,7 @@ function HeaderLoggedIn(props) {
             </a>
             <ReactTooltip place="bottom" id="search" class="custom-tooltip" />
 
-            {" "}<span data-for="chat" data-tip="Chat" className="mr-2 header-chat-icon text-white">
+            {" "}<span onClick={() => { appDispatch({ type: "toggleChat" }) }} data-for="chat" data-tip="Chat" className="mr-2 header-chat-icon text-white">
                 <i className="fas fa-comment"></i>
                 <span className="chat-count-badge text-white"> </span>
             </span>

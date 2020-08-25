@@ -17,6 +17,7 @@ import Profile from './profile'
 import EditPost from './editpost'
 import NotFound from './notFound'
 import Search from './search'
+import Chat from './chat'
 
 export default function App() {
 
@@ -28,7 +29,8 @@ export default function App() {
             username: localStorage.getItem('complexAppUsername'),
             avatar: localStorage.getItem('complexAppAvatar')
         },
-        isSearchOpen: false
+        isSearchOpen: false,
+        isChatOpen: false
     };
     function ourReducer(draft, action) {
         switch (action.type) {
@@ -49,6 +51,12 @@ export default function App() {
                 break;
             case "closeSearch":
                 draft.isSearchOpen = false;
+                break;
+            case "toggleChat":
+                draft.isChatOpen = !draft.isChatOpen;
+                break;
+            case "closeChat":
+                draft.isChatOpen = false;
                 break;
         }
     }
@@ -105,6 +113,7 @@ export default function App() {
                     <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
                         <Search />
                     </CSSTransition>
+                    <Chat />
                     <Footer />
                 </BrowserRouter>
             </DispatchContext.Provider>

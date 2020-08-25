@@ -30,7 +30,8 @@ export default function App() {
             avatar: localStorage.getItem('complexAppAvatar')
         },
         isSearchOpen: false,
-        isChatOpen: false
+        isChatOpen: false,
+        unreadChatCount: 0
     };
     function ourReducer(draft, action) {
         switch (action.type) {
@@ -57,6 +58,12 @@ export default function App() {
                 break;
             case "closeChat":
                 draft.isChatOpen = false;
+                break;
+            case "incrementUnreadChatCount":
+                draft.unreadChatCount++;
+                break;
+            case "clearUnreadChatCount":
+                draft.unreadChatCount = 0;
                 break;
         }
     }

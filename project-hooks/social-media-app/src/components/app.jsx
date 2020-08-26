@@ -79,6 +79,33 @@ export default function App() {
         }
     }, [state.loggedIn])
 
+    useEffect(() => {
+        if (state.loggedIn) {
+            const abortController = new AbortController();
+            const signal = abortController.signal;
+
+            fetch("http://localhost:8080/checkToken", {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify({
+                    token: state.user.token
+                }),
+                signal
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data) {
+                        dispatch({ type: "logout" })
+                        dispatch({ type: "flashMessage", value: "Your session has expired. Please log in again." })
+                    }
+                })
+                .then(error => console.error(error))
+
+        }
+    }, [])
+
     return (
         <StateContext.Provider value={state}>
             <DispatchContext.Provider value={dispatch}>

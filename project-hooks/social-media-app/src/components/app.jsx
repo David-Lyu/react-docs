@@ -37,7 +37,6 @@ export default function App() {
         switch (action.type) {
             case "login":
                 draft.loggedIn = true;
-                console.log(action.data)
                 draft.user = action.data
                 break;
             case "logout":
@@ -91,12 +90,7 @@ export default function App() {
                             <Profile />
                         </Route>
                         <Route path="/" exact>
-                            {
-                                state.loggedIn ?
-                                    <Home />
-                                    :
-                                    <HomeGuest />
-                            }
+                            {state.loggedIn ? <Home /> : <HomeGuest />}
                         </Route>
                         <Route path="/post/:postId" exact>
                             <ViewSinglePost />
